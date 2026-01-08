@@ -1,13 +1,10 @@
-import logging
 from fastapi import FastAPI
 from app.core.database import check_db_connection
 from app.core.redis import check_redis_connection
+import app.core.logging  # noqa
 
 from app.api.routes.health import router as health_router
 
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
