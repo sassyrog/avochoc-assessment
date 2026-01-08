@@ -4,7 +4,7 @@ from sqlalchemy.engine import URL
 from alembic import context
 import asyncio
 from app.core.config import settings
-from app.models.base import Base
+from app.models import Base
 import os
 import sys
 

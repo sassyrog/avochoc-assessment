@@ -4,8 +4,13 @@ from app.core.security import hash_password, verify_password, create_token
 
 
 class AuthService:
-    async def register(self, session, email, password):
-        user = User(email=email, hashed_password=hash_password(password))
+    async def register(self, session, email, password, name=None, phone=None):
+        user = User(
+            email=email,
+            hashed_password=hash_password(password),
+            name=name,
+            phone=phone,
+        )
         session.add(user)
         await session.commit()
         return user

@@ -1,5 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import date
 from app.models.asset import Asset
 from app.models.user import User
 from app.core.security import hash_password
@@ -60,7 +61,12 @@ class AssetService:
         session,
         name: str,
         type: str,
+        check_in_date: date,
         description: str | None = None,
+        count: int = 1,
+        model: str | None = None,
+        serial_number: str | None = None,
+        check_out_date: date | None = None,
         owner_id: int | None = None,
         owner_email: str | None = None,
         current_user=None,
@@ -76,6 +82,11 @@ class AssetService:
                 name=name,
                 type=type,
                 description=description,
+                count=count,
+                model=model,
+                serial_number=serial_number,
+                check_in_date=check_in_date,
+                check_out_date=check_out_date,
                 owner_id=resolved_owner_id,
             )
             session.add(asset)
@@ -93,6 +104,11 @@ class AssetService:
         name: str | None = None,
         type: str | None = None,
         description: str | None = None,
+        count: int | None = None,
+        model: str | None = None,
+        serial_number: str | None = None,
+        check_in_date: date | None = None,
+        check_out_date: date | None = None,
     ):
         """Update an asset"""
         try:
@@ -102,6 +118,16 @@ class AssetService:
                 asset.type = type
             if description is not None:
                 asset.description = description
+            if count is not None:
+                asset.count = count
+            if model is not None:
+                asset.model = model
+            if serial_number is not None:
+                asset.serial_number = serial_number
+            if check_in_date is not None:
+                asset.check_in_date = check_in_date
+            if check_out_date is not None:
+                asset.check_out_date = check_out_date
             await session.commit()
             await session.refresh(asset)
             return asset

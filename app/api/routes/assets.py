@@ -8,7 +8,7 @@ from app.api.deps import get_current_user
 router = APIRouter(prefix="/assets")
 
 
-@router.get("/", response_model=SuccessResponse[list[AssetOut]])
+@router.get("", response_model=SuccessResponse[list[AssetOut]])
 async def list_assets(
     session=Depends(get_session),
     user=Depends(get_current_user),
@@ -33,7 +33,7 @@ async def get_asset(
     return SuccessResponse(message="Asset retrieved successfully", code=200, data=asset)
 
 
-@router.post("/", response_model=SuccessResponse[AssetOut], status_code=201)
+@router.post("", response_model=SuccessResponse[AssetOut], status_code=201)
 async def create_asset(
     data: AssetCreate,
     session=Depends(get_session),
@@ -44,7 +44,12 @@ async def create_asset(
         session,
         data.name,
         data.type,
+        data.check_in_date,
         data.description,
+        data.count,
+        data.model,
+        data.serial_number,
+        data.check_out_date,
         owner_id=data.owner_id,
         owner_email=data.owner_email,
         current_user=user,
@@ -65,7 +70,16 @@ async def update_asset(
         raise HTTPException(404, "Asset not found")
 
     updated_asset = await svc.update_asset(
-        session, asset, data.name, data.type, data.description
+        session,
+        asset,
+        data.name,
+        data.type,
+        data.description,
+        data.count,
+        data.model,
+        data.serial_number,
+        data.check_in_date,
+        data.check_out_date,
     )
     return SuccessResponse(
         message="Asset updated successfully", code=200, data=updated_asset
