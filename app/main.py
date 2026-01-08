@@ -7,6 +7,7 @@ import app.core.logging  # noqa
 
 from app.api.routes.health import router as health_router
 from app.api.routes.auth import router as auth_router
+from app.api.routes.assets import router as assets_router
 
 
 @asynccontextmanager
@@ -22,3 +23,4 @@ app = FastAPI(lifespan=lifespan)
 
 app.include_router(health_router, prefix=API_V1_PREFIX)
 app.include_router(auth_router, prefix=API_V1_PREFIX)
+app.include_router(assets_router, prefix=API_V1_PREFIX)
