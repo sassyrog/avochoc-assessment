@@ -5,8 +5,21 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
-engine = create_async_engine(settings.DATABASE_URL, pool_pre_ping=True)
-AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
+engine = create_async_engine(
+    settings.DATABASE_URL,
+    pool_pre_ping=True,
+    pool_size=5,  # Number of connections to keep open
+    max_overflow=10,  # Additional connections if pool is full
+    pool_recycle=3600,  # Recycle connections after 1 hour
+    pool_timeout=30,  # Wait 30s for connection from pool
+    echo=False,  # Set to True for SQL debugging
+)
+
+AsyncSessionLocal = async_sessionmaker(
+    engine,
+    expire_on_commit=False,
+    autoflush=False,
+)
 
 
 async def get_session():

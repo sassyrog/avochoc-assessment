@@ -1,13 +1,118 @@
-# Python-generated files
+# Python
 __pycache__/
-*.py[oc]
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+.uv/
+
+# uv specific
+uv.lock
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+.tox/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Logs
+*.log
+logs/
+log/
+
+# Alembic
+# Note: Keep versions/ folder, ignore only temporary files
+alembic/versions/__pycache__/
+
+# Build and distribution
 build/
 dist/
-wheels/
-*.egg-info
+*.egg-info/
+.eggs/
 
-# Virtual environments
-.venv
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
-# enf files
-.env
+# Ruff
+.ruff_cache/
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Upload directories (user uploaded files)
+uploads/
+media/
+static/uploads/
+
+# Coverage reports
+coverage.xml
+*.cover
+
+# Documentation builds
+docs/_build/
+site/
+
+# Redis dump
+dump.rdb
+
+# Profiling
+*.prof
+
+# Docker volumes
+docker-compose.override.yml
