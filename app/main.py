@@ -12,8 +12,10 @@ from app.api.routes.assets import router as assets_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await check_db_connection()
-    await check_redis_connection()
+    import asyncio
+
+    # Parallelize connection checks for faster startup
+    await asyncio.gather(check_db_connection(), check_redis_connection())
     yield
     # Shutdown
     await engine.dispose()
