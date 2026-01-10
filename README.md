@@ -60,11 +60,17 @@ A `poetry.lock` file is provided to ensure consistent installs in the evaluation
    Copy the example environment file and update any necessary values.
    ```bash
    cp .env.example .env
+   # I use host.docker.internal because network mode is host docker network config can be different on different machines
    ```
 
 3. **Start services**:
    ```bash
    docker-compose up -d
+   ```
+
+   **Database Migrations**: The current setup requires you to run migrations manually after starting the containers. You can do this by running:
+   ```bash
+   docker-compose exec api alembic upgrade head
    ```
 
 4. **Run migrations**:

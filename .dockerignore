@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.env
+.env.local
+.pytest_cache/
+.coverage
+htmlcov/
+.git/
+.vscode/
+uv.lock
+.python-version
