@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, BackgroundTasks
 from app.core.database import get_session
 from app.schemas.user import UserCreate, LoginResponse
 from app.schemas.response import SuccessResponse
@@ -10,10 +10,18 @@ router = APIRouter(prefix="/auth")
 @router.post(
     "/register", response_model=SuccessResponse[LoginResponse], status_code=201
 )
-async def register(data: UserCreate, session=Depends(get_session)):
+async def register(
+    data: UserCreate,
+    request: Request,
+    background_tasks: BackgroundTasks,
+    session=Depends(get_session),
+):
     svc = AuthService()
     await svc.register(session, data.email, data.password, data.name, data.phone)
-    token, authenticated_user = await svc.login(session, data.email, data.password)
+    ip = request.client.host if request.client else None
+    token, authenticated_user = await svc.login(
+        session, data.email, data.password, ip, background_tasks
+    )
     return SuccessResponse(
         message="User registered successfully",
         code=201,
@@ -30,11 +38,21 @@ async def register(data: UserCreate, session=Depends(get_session)):
 
 
 @router.post("/login", response_model=SuccessResponse[LoginResponse])
-async def login(data: UserCreate, session=Depends(get_session)):
+async def login(
+    data: UserCreate,
+    request: Request,
+    background_tasks: BackgroundTasks,
+    session=Depends(get_session),
+):
     svc = AuthService()
-    token, user = await svc.login(session, data.email, data.password)
+    ip = request.client.host if request.client else None
+    token, user = await svc.login(
+        session, data.email, data.password, ip, background_tasks
+    )
+
     if not token:
         raise HTTPException(401, "Invalid credentials")
+
     return SuccessResponse(
         message="Login successful",
         code=200,

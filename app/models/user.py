@@ -11,5 +11,6 @@ class User(Base):
     hashed_password: Mapped[str]
     name: Mapped[str | None]
     phone: Mapped[str | None]
+    last_ip: Mapped[str | None]
 
     assets = relationship("Asset", back_populates="owner")

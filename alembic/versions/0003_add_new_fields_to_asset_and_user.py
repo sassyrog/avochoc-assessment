@@ -1,6 +1,6 @@
 """add_new_fields_to_asset_and_user
 
-Revision ID: 2633bd141019
+Revision ID: 0003
 Revises: 0002
 Create Date: 2026-01-08 17:24:20.230195
 
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "2633bd141019"
+revision = "0003"
 down_revision = "0002"
 branch_labels = None
 depends_on = None
